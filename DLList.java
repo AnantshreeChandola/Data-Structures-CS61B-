@@ -33,11 +33,10 @@ public class DLList<bloop>{
 		return sentinel.prev.item;
 	}
 	public void addlast(bloop x){
-		Node y = new Node(x, null, sentinel.prev);
+		Node y = new Node(x, sentinel, sentinel.prev);
 		Node temp = sentinel.prev;
+		temp.next = y;
 		sentinel.prev = y;
-		y.prev = temp;
-		y.next = y;
 		size += 1;
 	}
 	public void removefirst(){
