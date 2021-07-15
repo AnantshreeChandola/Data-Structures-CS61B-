@@ -29,6 +29,7 @@ class Traversal:
                 return rh+1
 
 
+    ''' RECURSIVE LEVELORDER [O(N^2)] 
     def Printlevelorder(self, level):
             if self == None:
                 return None
@@ -40,8 +41,20 @@ class Traversal:
     def Levelordertraversal(self):
             height = self.Height()
             for i in range(1, height+1):
-                Traversal.Printlevelorder(self, i)
+                Traversal.Printlevelorder(self, i)'''
 
+    def Levelordertraversal(self):
+            if self == None:
+                return
+            queue = [self]
+            while queue:
+                s = queue.pop(0)
+                print(s.val)
+                if s.left:
+                    queue.append(s.left)
+                if s.right:
+                    queue.append(s.right)
+    
     def Preorder(self):
         if self:
             print(self.val, end=" ")
