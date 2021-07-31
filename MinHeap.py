@@ -1,11 +1,15 @@
 class MinHeap:
     heap = []
-    def heapifybottomup(self, key):
+    #If the elements are not dynamically inserted, we can perform the heapify operation with O(n) complexity by using botton-up heapify
+    #on non-leaf nodes.
+    #top-down heapify to build heap
+    def heapifytopdown(self, key):
         current = len(self.heap)-1
         while(((current-1)//2 >= 0) and self.heap[(current-1)//2] > key):
             self.heap[current], self.heap[(current-1)//2] = self.heap[(current-1)//2], self.heap[current]
             current = (current-1)//2
-    def heapifytopdown(self):
+    #bottom-up heapify
+    def heapifyroot(self):
         current = 0
         length = len(self.heap)
         while((current*2 + 2) < length and (min(self.heap[current*2+1], self.heap[current*2+2]) < self.heap[current])):
@@ -14,14 +18,14 @@ class MinHeap:
             current = exchange
     def Add(self, key):
         self.heap.append(key)
-        self.heapifybottomup(key)
+        self.heapifytopdown(key)
     def GetSmallest(self):
         return self.heap[0]
     def RemoveSmallest(self):
         length = len(self.heap)
         self.heap[0], self.heap[length-1] = self.heap[length-1], self.heap[0]
         del self.heap[length-1]
-        self.heapifytopdown()
+        self.heapifyroot()
     def GetSize(self):
         return len(self.heap)
 pq = MinHeap()
