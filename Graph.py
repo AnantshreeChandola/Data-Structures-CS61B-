@@ -13,7 +13,7 @@ class Graph:
         while queue:
             previous = queue.pop(0)
             for next in self.graph[previous]:
-                if (dist[next] == 0 or dist[next]>dist[previous]+1) and next!=s:
+                if (dist[next] == 0 and next!=s):
                     queue.append(next)
                     pre[next] = previous
                     dist[next] = dist[previous]+1
