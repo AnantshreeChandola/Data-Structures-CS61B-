@@ -1,46 +1,45 @@
 class DisjointSets:
-    def __init__ (self, nodes, parent):
-        self.parent = [-1]*nodes
+    def __init__ (self, nodes):
+        self.parent = [i for i in range(nodes)]
         self.size = [1]*nodes
+    def find(self, node): 
+        pre = self.parent[node]
+        while self.parent[pre] != pre:
+            self.size[pre] -= self.size[node]
+            pre = self.parent[pre]
+        return pre
     def Isconnected(self, p, q):
-        while self.parent[p] >= 0:
-            p = self.parent[p]
-        while self.parent[q] >= 0:
-            q = self.parent[q]
+        p = self.find(p)
+        q = self.find(q)
+        print(p, q)
         if (p == q):
             return True
         else:
             return False
     def Connect(self, p, q):
-        if not self.Isconnected(p, q):
-            root = p if self.size[p] >= self.size[q] else q
-            child = q if root == p else p
-            while self.parent[child] >= 0:
-                self.size[root] += self.size[child]
-                self.size[self.parent[child]] -= self.size[child]
-                curr = child
-                child = self.parent[child]
-                self.parent[curr] = root
-            while self.parent[root] >= 0:
-                root = self.parent[root]
-            self.parent[child] = root
-            self.size[root] += self.size[child]
+        p = self.find(p)
+        q = self.find(q)
+        if p == q:
+            return
+        else:
+            if self.size[p] >= self.size[q]:
+                self.parent[q] = p
+                self.size[p] += self.size[q]
+            elif self.size[q] > self.size[p]:
+                self.parent[p] = q
+                self.size[q] += self.size[p]
 
-ds = DisjointSets(11, [])
-ds.Connect(0, 1)
+
+
+ds = DisjointSets(7)
 ds.Connect(0, 2)
-ds.Connect(0, 3)
-ds.Connect(0, 4)
-ds.Connect(0, 5)
-ds.Connect(6, 7)
-ds.Connect(6, 8)
-ds.Connect(8, 9)
-ds.Connect(9, 10)
-print(ds.Isconnected(0, 7))
+ds.Connect(2, 4)
+ds.Connect(3, 1)
+ds.Connect(5, 6)
 print(ds.parent)
 print(ds.size)
-ds.Connect(0, 8)
+ds.Connect(0, 6)
+ds.Connect(5, 1)
+print(ds.Isconnected(0, 1))
 print(ds.parent)
 print(ds.size)
-print(ds.Isconnected(0, 7))
-
